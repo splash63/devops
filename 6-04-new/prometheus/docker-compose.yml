@@ -1,0 +1,48 @@
+volumes:
+  prometheus-data:
+  gaychenkoves-my-netology-hw:
+    name: gaychenkoves-my-netology-hw
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+services:
+    prometheus:
+      image: prom/prometheus
+      container_name: gaychenkoves-netology-prometheus
+      volumes:
+        - ./prometheus/:/etc/prometheus/
+        - prometheus-data:/prometheus
+      command:
+        - '--config.file=/etc/prometheus/prometheus.yml'
+      ports:
+        - 9090:9090
+      networks:
+        - gaychenkoves-my-netology-hw
+      restart: always
+    pushgateway:
+      image: prom/pushgateway
+      container_name: gaychenkoves-netology-pushgateway
+      ports:
+      - 9091:9091
+      depends_on:
+        - prometheus
+      restart: always
+      networks:
+        - gaychenkoves-my-netology-hw
+    grafana:
+      image: grafana/grafana
+      container_name: gaychenkoves-netology-grafana
+      user: "472"
+      depends_on:
+        - prometheus
+      ports:
+        - 80:3000
+      volumes:
+        - grafana_data:/var/lib/grafana
+        - ./grafana/provisioning/:/etc/grafana/provisioning/
+      environment::
+        - ./grafana/config.monitoring
+      networks:
+        - gaychenkoves-my-netology-hw
+      restart: always
