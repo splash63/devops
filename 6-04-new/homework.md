@@ -164,7 +164,6 @@ services:
     grafana:
       image: grafana/grafana
       container_name: gaychenkoves-netology-grafana
-      user: "472"
       depends_on:
         - prometheus
       ports:
@@ -172,7 +171,7 @@ services:
       volumes:
         - grafana_data:/var/lib/grafana
         - ./grafana/provisioning/:/etc/grafana/provisioning/
-      environment::
+      environment:
         - ./grafana/config.monitoring
       networks:
         - gaychenkoves-my-netology-hw
