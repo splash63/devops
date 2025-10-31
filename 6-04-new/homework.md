@@ -131,6 +131,8 @@ grafana:
 ```yml
 volumes:
   prometheus-data:
+  grafana_data:
+networks:
   gaychenkoves-my-netology-hw:
     name: gaychenkoves-my-netology-hw
     driver: bridge
@@ -172,7 +174,7 @@ services:
         - grafana_data:/var/lib/grafana
         - ./grafana/provisioning/:/etc/grafana/provisioning/
       environment:
-        - ./grafana/config.monitoring
+        - ./grafana/grafana.ini
       networks:
         - gaychenkoves-my-netology-hw
       restart: always
