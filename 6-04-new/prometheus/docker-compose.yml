@@ -1,5 +1,7 @@
 volumes:
   prometheus-data:
+  grafana_data:
+networks:
   gaychenkoves-my-netology-hw:
     name: gaychenkoves-my-netology-hw
     driver: bridge
@@ -30,6 +32,7 @@ services:
       restart: always
       networks:
         - gaychenkoves-my-netology-hw
+    
     grafana:
       image: grafana/grafana
       container_name: gaychenkoves-netology-grafana
