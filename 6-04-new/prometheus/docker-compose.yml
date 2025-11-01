@@ -1,6 +1,7 @@
 volumes:
   prometheus-data:
   grafana-data:
+  alertmanager-data:
 networks:
   gaychenkoves-my-netology-hw:
     name: gaychenkoves-my-netology-hw
@@ -47,4 +48,19 @@ services:
         - ./grafana/config.monitoring
       networks:
         - gaychenkoves-my-netology-hw
+      restart: always
+
+    alertmanager:
+      image: prom/alertmanager
+      container_name: gaychenkoves-netology-alertmanager
+      command: --config.file=/etc/alertmanager/alertmanager.yml
+      ports:
+        - 9093:9093
+      volumes:
+        - ./alertmanager:/etc/alertmanager
+        - alertmanager-data:/data
+      networks:
+        - gaychenkoves-my-netology-hw
+      depends_on:
+        - prometheus
       restart: always
