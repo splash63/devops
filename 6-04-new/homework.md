@@ -249,5 +249,5 @@ services:
         - gaychenkoves-my-netology-hw
       restart: always
 ```
-![alt text](https://github.com/splash63/6-04-new/img/docker_ps.png)
-![alt text](https://github.com/splash63/6-04-new/img/my_metric.png)
+![alt text](https://github.com/splash63/devops/blob/main/6-04-new/img/docker_ps.png)
+![alt text](https://github.com/splash63/devops/blob/main/6-04-new/img/my_metric.png)
