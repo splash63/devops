@@ -1,6 +1,6 @@
 volumes:
   prometheus-data:
-  grafana_data:
+  grafana-data:
 networks:
   gaychenkoves-my-netology-hw:
     name: gaychenkoves-my-netology-hw
@@ -32,7 +32,7 @@ services:
       restart: always
       networks:
         - gaychenkoves-my-netology-hw
-    
+
     grafana:
       image: grafana/grafana
       container_name: gaychenkoves-netology-grafana
@@ -41,8 +41,10 @@ services:
       ports:
         - 80:3000
       volumes:
-        - grafana_data:/var/lib/grafana
-        - ./grafana:/etc/grafana
+        - grafana-data:/var/lib/grafana
+        - ./grafana/provisioning/:/etc/grafana/provisioning/
+      env_file:
+        - ./grafana/config.monitoring
       networks:
         - gaychenkoves-my-netology-hw
       restart: always
