@@ -260,9 +260,8 @@ services:
 
 ## Решение 8
 
-```bash
-docker compose down
-```
+![alt text](https://github.com/splash63/devops/blob/main/6-04-new/img/dcd.png)
+
 ## Задание 9*
 Выполните действия:
 
