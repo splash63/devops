@@ -113,7 +113,7 @@ grafana:
   volumes:
     - grafana_data:/var/lib/grafana
     - ./grafana/provisioning/:/etc/grafana/provisioning/
-  environment:
+  env_file:
     - ./grafana/config.monitoring
   networks:
     - gaychenkoves-my-netology-hw
@@ -173,8 +173,8 @@ services:
       volumes:
         - grafana_data:/var/lib/grafana
         - ./grafana/provisioning/:/etc/grafana/provisioning/
-      environment:
-        - ./grafana/grafana.ini
+      env_file:
+        - ./grafana/config.monitoring
       networks:
         - gaychenkoves-my-netology-hw
       restart: always
@@ -195,3 +195,59 @@ docker compose up -d
 * docker-compose.yml целиком;
 * скриншот команды docker ps после запуске docker-compose.yml;
 * скриншот графика, постоенного на основе вашей метрики.
+
+## Решение 7
+```yml
+volumes:
+  prometheus-data:
+  grafana-data:
+networks:
+  gaychenkoves-my-netology-hw:
+    name: gaychenkoves-my-netology-hw
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+services:
+    prometheus:
+      image: prom/prometheus
+      container_name: gaychenkoves-netology-prometheus
+      volumes:
+        - ./prometheus/:/etc/prometheus/
+        - prometheus-data:/prometheus
+      command:
+        - '--config.file=/etc/prometheus/prometheus.yml'
+      ports:
+        - 9090:9090
+      networks:
+        - gaychenkoves-my-netology-hw
+      restart: always
+    pushgateway:
+      image: prom/pushgateway
+      container_name: gaychenkoves-netology-pushgateway
+      ports:
+      - 9091:9091
+      depends_on:
+        - prometheus
+      restart: always
+      networks:
+        - gaychenkoves-my-netology-hw
+
+    grafana:
+      image: grafana/grafana
+      container_name: gaychenkoves-netology-grafana
+      depends_on:
+        - prometheus
+      ports:
+        - 80:3000
+      volumes:
+        - grafana-data:/var/lib/grafana
+        - ./grafana/provisioning/:/etc/grafana/provisioning/
+      env_file:
+        - ./grafana/config.monitoring
+      networks:
+        - gaychenkoves-my-netology-hw
+      restart: always
+```
+![alt text](https://github.com/splash63/6-04-new/img/docker_ps.png)
+![alt text](https://github.com/splash63/6-04-new/img/my_metric.png)
