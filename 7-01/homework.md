@@ -111,14 +111,78 @@
         owner: root
         group: root
         mode: 0644
-
-    - name: Verify MOTD content
-      shell: |
-        grep -q "{{ motd_message }}" /etc/motd
-      register: motd_check
-      failed_when: motd_check.rc != 0
 ```
 
 ![alt text](https://github.com/splash63/devops/blob/main/7-01/img/modt_playbook.png)
 
 ![alt text](https://github.com/splash63/devops/blob/main/7-01/img/welcome.png)
+
+## Задание 2
+
+Выполните действия, приложите файлы с модифицированным плейбуком и вывод выполнения.
+
+Модифицируйте плейбук из пункта 3, задания 1. В качестве приветствия он должен установить IP-адрес и hostname управляемого хоста, пожелание хорошего дня системному администратору.
+
+## Решение 2
+
+```yml
+---
+- name: Configure MOTD message
+  hosts: all
+  become: yes
+
+  vars:
+    motd_message: |
+      ================================================================
+      Welcome to {{ ansible_facts.fqdn }}!
+      System IP: {{ ansible_facts.all_ipv4_addresses[0] }}
+
+      Have a great day, System Administrator!
+      ================================================================
+
+  tasks:
+    - name: Write new MOTD message
+      copy:
+        content: "{{ motd_message }}"
+        dest: /etc/motd
+        owner: root
+        group: root
+        mode: 0644
+```
+![alt text](https://github.com/splash63/devops/blob/main/7-01/img/modt_playbook_ip.png)
+
+![alt text](https://github.com/splash63/devops/blob/main/7-01/img/ip.png)
+
+## Задание 3
+
+Выполните действия, приложите архив с ролью и вывод выполнения.
+
+Ознакомьтесь со статьёй «Ansible - это вам не bash», сделайте соответствующие выводы и не используйте модули shell или command при выполнении задания.
+
+Создайте плейбук, который будет включать в себя одну, созданную вами роль. Роль должна:
+
+1. Установить веб-сервер Apache на управляемые хосты.
+2. Сконфигурировать файл index.html c выводом характеристик каждого компьютера как веб-страницу по умолчанию для Apache. Необходимо включить CPU, RAM, величину первого HDD, IP-адрес. Используйте Ansible facts и jinja2-template. Необходимо реализовать handler: перезапуск Apache только в случае изменения файла конфигурации Apache.
+3. Открыть порт 80, если необходимо, запустить сервер и добавить его в автозагрузку.
+4. Сделать проверку доступности веб-сайта (ответ 200, модуль uri).
+
+В качестве решения:
+
+* предоставьте плейбук, использующий роль;
+* разместите архив созданной роли у себя на Google диске и приложите ссылку на роль в своём решении;
+* предоставьте скриншоты выполнения плейбука;
+* предоставьте скриншот браузера, отображающего сконфигурированный index.html в качестве сайта.
+
+## Решение 3
+```yml
+---
+- name: Deploy Apache server with system info
+  hosts: webservers
+  become: yes
+
+  roles:
+    - apache_setup
+```
+
+![alt text](https://github.com/splash63/devops/blob/main/7-01/img/apache_role.png)
+![alt text](https://github.com/splash63/devops/blob/main/7-01/img/web.png)
