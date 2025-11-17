@@ -1,0 +1,7 @@
+---
+- name: Deploy Apache server with system info
+  hosts: webservers
+  become: yes
+    
+  roles:
+    - apache_setup

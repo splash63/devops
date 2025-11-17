@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Server Info - {{ inventory_hostname }}</title>
+</head>
+<body>
+    <h1>System Information for {{ inventory_hostname }}</h1>
+    <ul>
+        <li><strong>CPU:</strong> {{ ansible_processor[0] }} ({{ ansible_processor_cores }} cores)</li>
+        <li><strong>RAM:</strong> {{ ansible_memtotal_mb }} MB</li>
+        <li><strong>First HDD:</strong> {{ ansible_devices.keys() | list | first }} - {{ ansible_devices[ansible_devices.keys() | list | first].size }}</li>
+        <li><strong>IP Address:</strong> {{ ansible_default_ipv4.address }}</li>
+    </ul>
+</body>
+</html>
