@@ -183,6 +183,6 @@
   roles:
     - apache_setup
 ```
-
+Весь проект роли в папке apache_server
 ![alt text](https://github.com/splash63/devops/blob/main/7-01/img/apache_role.png)
 ![alt text](https://github.com/splash63/devops/blob/main/7-01/img/web.png)
