@@ -23,15 +23,3 @@
 ## Решение 3
 
 ![alt text](https://github.com/splash63/devops/blob/main/7-03/img/postgre.png)
-
-## Задание 4*
-
-Изучите инструкцию yandex для terraform. Добейтесь работы паплайна с безопасной передачей токена от облака в terraform через переменные окружения. Для этого:
-
-1. Настройте профиль для yc tools по инструкции.
-2. Удалите из кода строчку "token = var.yandex_cloud_token". Terraform будет считывать значение ENV переменной YC_TOKEN.
-3. Выполните команду export YC_TOKEN=$(yc iam create-token) и в том же shell запустите terraform.
-4. Для того чтобы вам не нужно было каждый раз выполнять export - добавьте данную команду в самый конец файла ~/.bashrc
-
-## Решение 4
-
