@@ -13,11 +13,11 @@
 
 ## Решение 1
 
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/jenkins_1.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins_1.png)
 
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/jenkins_2.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins_2.png)
 
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/job.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/job.png)
 ---
 
 ## Задание 2
@@ -31,8 +31,8 @@
 
 ## Решение 2
 
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/jenkins_pipe1.png)
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/jenkins_pipe2.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins_pipe1.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins_pipe2.png)
 ---
 
 ## Задание 3
@@ -48,9 +48,9 @@
 
 ## Решение 3
 
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/jenkins3.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins3.png)
 
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/jenkins4.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins4.png)
 ---
 
 ## Задание 4*
@@ -64,7 +64,7 @@
 
 ## Решение 4*
 
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/jenkins5.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins5.png)
 
-![alt text](https://github.com/splash63/devops/blob/main/7-03/img/jenkins6.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins6.png)
 ---
