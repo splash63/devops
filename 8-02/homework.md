@@ -48,9 +48,9 @@
 
 ## Решение 3
 
-![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins3.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins_3.png)
 
-![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins4.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins_4.png)
 ---
 
 ## Задание 4*
@@ -64,7 +64,7 @@
 
 ## Решение 4*
 
-![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins5.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins_5.png)
 
-![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins6.png)
+![alt text](https://github.com/splash63/devops/blob/main/8-02/img/jenkins_6.png)
 ---
