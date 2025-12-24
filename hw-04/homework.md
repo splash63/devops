@@ -21,3 +21,7 @@
 
 ![alt text](https://github.com/splash63/devops/blob/main/hw-04/img/grafana_user.png)
 ---
+
+## Задание 5*
+
+![alt text](https://github.com/splash63/devops/blob/main/hw-04/img/integrated.png)
