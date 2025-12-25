@@ -8,6 +8,8 @@
 ## Задание 2
 
 ![alt text](https://github.com/splash63/devops/blob/main/hw-05/img/firing.png)
+
+![alt text](https://github.com/splash63/devops/blob/main/hw-05/img/alert.png)
 ---
 
 ## Задание 3
