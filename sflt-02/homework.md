@@ -2,7 +2,7 @@
 
 ## Задание 1
 
-![alt text](https://github.com/splash63/devops/blob/main/sflt-02/img/haproxy-balance.png)
+![alt text](https://github.com/splash63/devops/blob/main/sflt-02/img/haproxy-balanced.png)
 
 [haproxy_1.cfg](https://github.com/splash63/devops/blob/main/sflt-02/config/haproxy_1.cfg)
 ---
