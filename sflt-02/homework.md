@@ -4,12 +4,12 @@
 
 ![alt text](https://github.com/splash63/devops/blob/main/sflt-02/img/haproxy-balance.png)
 
-![alt text](https://github.com/splash63/devops/blob/main/sflt-02/confighaproxy_1.cfg)
+![alt text](https://github.com/splash63/devops/blob/main/sflt-02/config/haproxy_1.cfg)
 ---
 
 ## Задание 2
 
 ![alt text](https://github.com/splash63/devops/blob/main/sflt-02/img/example.png)
 
-![alt text](https://github.com/splash63/devops/blob/main/sflt-02/confighaproxy_2.cfg)
+![alt text](https://github.com/splash63/devops/blob/main/sflt-02/config/haproxy_2.cfg)
 ---
