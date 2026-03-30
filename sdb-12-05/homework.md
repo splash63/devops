@@ -21,3 +21,6 @@ WHERE p.payment_date >= '2005-07-30'
   AND p.payment_date < '2005-07-31'
 GROUP BY c.customer_id, c.last_name, c.first_name, f.title;
 ```
+## Задание 3
+
+GiST, SP-GiST, GIN, BRIN, R-Tree.
