@@ -15,13 +15,13 @@ https://hub.docker.com/repository/docker/splash63/custom-nginx/general
 
 3. Контейнер остановился после нажатия Ctrl+C, потому что сигнал SIGINT был передан главному процессу контейнера (nginx). После завершения основного процесса Docker автоматически остановил контейнер, так как контейнер существует только пока работает его PID 1.
 
-4. 5.
+4, 5
 ![alt text](https://github.com/splash63/devops/blob/main/05-virt-03-docker-intro/img/3.png)
 
 6.
 ![alt text](https://github.com/splash63/devops/blob/main/05-virt-03-docker-intro/img/4.png)
 
-7. 8. 9. 10.
+7, 8, 9, 10
 ![alt text](https://github.com/splash63/devops/blob/main/05-virt-03-docker-intro/img/5.png)
 
 Docker пробросил порт так 127.0.0.1:8080 на хосте → 80 порт внутри контейнера. Но внутри контейнера nginx теперь слушает не 80, а 81.
