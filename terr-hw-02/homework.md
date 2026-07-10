@@ -14,3 +14,5 @@
 ## Задание 4
 
 ![alt text](https://github.com/splash63/devops/blob/main/terr-hw-02/img/4.png)
+
+[a link](https://https://github.com/splash63/devops/tree/main/terr-hw-02/src)
