@@ -1,0 +1,12 @@
+{{ ansible_managed | comment }}
+server {
+    listen {{ lighthouse_http_port }};
+    server_name _;
+
+    root {{ lighthouse_install_dir }};
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}

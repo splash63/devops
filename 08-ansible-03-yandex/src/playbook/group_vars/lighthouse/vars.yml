@@ -1,0 +1,5 @@
+---
+lighthouse_repo_branch: master
+lighthouse_download_url: "https://codeload.github.com/VKCOM/lighthouse/tar.gz/refs/heads/{{ lighthouse_repo_branch }}"
+lighthouse_install_dir: /var/www/lighthouse
+lighthouse_http_port: 8080

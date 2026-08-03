@@ -1,0 +1,205 @@
+---
+- name: Install Clickhouse
+  hosts: clickhouse
+  handlers:
+    - name: Update apt cache after adding clickhouse repository
+      become: true
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Start clickhouse service
+      become: true
+      ansible.builtin.service:
+        name: clickhouse-server
+        state: restarted
+  tasks:
+    - name: Install apt prerequisites for clickhouse repository
+      become: true
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - gnupg
+        state: present
+
+    - name: Download clickhouse GPG key
+      ansible.builtin.get_url:
+        url: https://packages.clickhouse.com/rpm/lts/repodata/repomd.xml.key
+        dest: /tmp/clickhouse-release.key
+        mode: "0644"
+
+    - name: Dearmor clickhouse GPG key into apt keyring
+      become: true
+      ansible.builtin.command:
+        cmd: gpg --dearmor -o /usr/share/keyrings/clickhouse-keyring.gpg /tmp/clickhouse-release.key
+        creates: /usr/share/keyrings/clickhouse-keyring.gpg
+
+    - name: Deploy clickhouse apt source list
+      become: true
+      ansible.builtin.template:
+        src: templates/clickhouse.list.j2
+        dest: /etc/apt/sources.list.d/clickhouse.list
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Update apt cache after adding clickhouse repository
+
+    - name: Flush repository handlers
+      ansible.builtin.meta: flush_handlers
+
+    - name: Install clickhouse packages
+      become: true
+      ansible.builtin.apt:
+        name: "{{ clickhouse_packages | map('regex_replace', '^(.*)$', '\\1=' + clickhouse_version) | list }}"
+        state: present
+      notify: Start clickhouse service
+    - name: Flush install handlers
+      ansible.builtin.meta: flush_handlers
+    - name: Create database
+      ansible.builtin.command: "clickhouse-client -q 'create database logs;'"
+      register: create_db
+      failed_when: create_db.rc != 0 and create_db.rc != 82
+      changed_when: create_db.rc == 0
+
+- name: Install and configure vector
+  hosts: vector
+  become: true
+  handlers:
+    - name: Reload systemd daemon
+      ansible.builtin.systemd:
+        daemon_reload: true
+
+    - name: Restart vector
+      ansible.builtin.service:
+        name: vector
+        state: restarted
+
+  tasks:
+    - name: Create vector install/config/data directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+      loop:
+        - "{{ vector_install_dir }}"
+        - "{{ vector_config_dir }}"
+        - "{{ vector_data_dir }}"
+
+    - name: Download vector distrib
+      ansible.builtin.get_url:
+        url: "{{ vector_download_url }}"
+        dest: "/tmp/vector-{{ vector_version }}-{{ vector_arch }}.tar.gz"
+        mode: "0644"
+
+    - name: Unpack vector distrib
+      ansible.builtin.unarchive:
+        src: "/tmp/vector-{{ vector_version }}-{{ vector_arch }}.tar.gz"
+        dest: "{{ vector_install_dir }}"
+        remote_src: true
+        extra_opts:
+          - --strip-components=2
+        creates: "{{ vector_install_dir }}/bin/vector"
+
+    - name: Link vector binary into PATH
+      ansible.builtin.file:
+        src: "{{ vector_install_dir }}/bin/vector"
+        dest: "{{ vector_bin_path }}"
+        state: link
+
+    - name: Deploy vector configuration
+      ansible.builtin.template:
+        src: templates/vector.yaml.j2
+        dest: "{{ vector_config_file }}"
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart vector
+
+    - name: Deploy vector systemd unit
+      ansible.builtin.template:
+        src: templates/vector.service.j2
+        dest: /etc/systemd/system/vector.service
+        owner: root
+        group: root
+        mode: "0644"
+      notify:
+        - Reload systemd daemon
+        - Restart vector
+
+    - name: Flush handlers
+      ansible.builtin.meta: flush_handlers
+
+    - name: Enable and start vector service
+      ansible.builtin.service:
+        name: vector
+        enabled: true
+        state: started
+
+- name: Install and configure LightHouse
+  hosts: lighthouse
+  become: true
+  handlers:
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+
+  tasks:
+    - name: Install nginx (RedHat family)  # noqa: fqcn[action-core] - yum module required by assignment
+      ansible.legacy.yum:
+        name: nginx
+        state: present
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: Install nginx (Debian family)
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Create LightHouse install directory
+      ansible.builtin.file:
+        path: "{{ lighthouse_install_dir }}"
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Check whether LightHouse is already unpacked
+      ansible.builtin.stat:
+        path: "{{ lighthouse_install_dir }}/index.html"
+      register: lighthouse_index
+
+    - name: Download LightHouse static distrib
+      ansible.builtin.get_url:
+        url: "{{ lighthouse_download_url }}"
+        dest: /tmp/lighthouse.tar.gz
+        mode: "0644"
+      when: not lighthouse_index.stat.exists
+
+    - name: Unpack LightHouse static distrib
+      ansible.builtin.unarchive:
+        src: /tmp/lighthouse.tar.gz
+        dest: "{{ lighthouse_install_dir }}"
+        remote_src: true
+        extra_opts:
+          - --strip-components=1
+      when: not lighthouse_index.stat.exists
+
+    - name: Deploy nginx config for LightHouse
+      ansible.builtin.template:
+        src: templates/lighthouse.conf.j2
+        dest: /etc/nginx/conf.d/lighthouse.conf
+        owner: root
+        group: root
+        mode: "0644"
+      notify: Restart nginx
+
+    - name: Enable and start nginx service
+      ansible.builtin.service:
+        name: nginx
+        enabled: true
+        state: started
