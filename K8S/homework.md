@@ -46,7 +46,7 @@ kubectl port-forward service/netology-svc 8082:80
 
 Получен ответ echoserver от Pod `netology-web`.
 
-![Результат подключения через Service netology-svc](screenshots/hello-world-curl.pngg)
+![Результат подключения через Service netology-svc](screenshots/hello-world-curl.png)
 
 ## Состояние Pod
 
