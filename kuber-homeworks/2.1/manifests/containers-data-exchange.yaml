@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-exchange
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: data-exchange
+  template:
+    metadata:
+      labels:
+        app: data-exchange
+    spec:
+      containers:
+        - name: busybox
+          image: busybox:1.37
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              while true; do
+                date -u '+%Y-%m-%dT%H:%M:%SZ' >> /shared/exchange.log
+                sleep 5
+              done
+          volumeMounts:
+            - name: shared
+              mountPath: /shared
+        - name: multitool
+          image: wbitt/network-multitool:latest
+          volumeMounts:
+            - name: shared
+              mountPath: /shared
+              readOnly: true
+      volumes:
+        - name: shared
+          emptyDir: {}
