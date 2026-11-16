@@ -1,0 +1,4 @@
+components:
+  frontend:
+    image:
+      tag: "1.28-alpine"

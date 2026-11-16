@@ -1,0 +1,17 @@
+{{- range $name, $_ := .Values.components }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $.Release.Name }}-{{ $name }}
+  labels:
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+spec:
+  selector:
+    app.kubernetes.io/instance: {{ $.Release.Name }}
+    app.kubernetes.io/component: {{ $name }}
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+{{- end }}
